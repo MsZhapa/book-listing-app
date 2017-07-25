@@ -139,15 +139,6 @@ public class QueryUtils {
             // which represents a list of features (or books).
             JSONArray itemsArray = baseJsonResponse.getJSONArray("items");
             StringBuilder items = new StringBuilder();
-            if (baseJsonResponse.has("items")) {
-                itemsArray = baseJsonResponse.getJSONArray("items");
-                for (int n = 0; n < itemsArray.length(); n++) {
-                    items.append(System.getProperty("line.separator"));
-                    items.append(itemsArray.getString(n));
-                }
-            } else {
-                items.append("No Items");
-            }
 
             // For each book in the bookArray, create an {@link Book} object
             for (int i = 0; i < itemsArray.length(); i++) {

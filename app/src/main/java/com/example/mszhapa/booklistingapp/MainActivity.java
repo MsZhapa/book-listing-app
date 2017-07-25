@@ -11,8 +11,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -41,8 +41,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
      */
     private TextView mEmptyStateTextView;
 
-    private String mBookParameter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,28 +62,29 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // so the list can be populated in the user interface
         bookListView.setAdapter(mAdapter);
 
-        Button searchButton = (Button) findViewById(R.id.button);
+        ImageButton searchButton = (ImageButton) findViewById(R.id.button);
         EditText editText = (EditText) findViewById(R.id.editText);
-        mBookParameter = editText.getText().toString().trim();
+        String mBookParameter = editText.getText().toString().trim();
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mAdapter.clear();
-
                 updateInfo();
+                View loadingIndicator = findViewById(R.id.loading_indicator);
+                loadingIndicator.setVisibility(View.VISIBLE);
 
             }
         });
         bookListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                // Find the current earthquake that was clicked on
+                // Find the current book that was clicked on
                 Book currentBook = mAdapter.getItem(position);
 
                 // Convert the String URL into a URI object (to pass into the Intent constructor)
                 Uri bookUri = Uri.parse(currentBook.getUrl());
 
-                // Create a new intent to view the earthquake URI
+                // Create a new intent to view the book URI
                 Intent websiteIntent = new Intent(Intent.ACTION_VIEW, bookUri);
 
                 // Send the intent to launch a new activity
@@ -126,67 +125,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
             // Update empty state with no connection error message
-            mEmptyStateTextView.setText("no esta internet");
+            mEmptyStateTextView.setText(getString(R.string.no_internet_connection));
         }
     }
 
-    //        public void checkOnStart() {
-//
-//            // Get a reference to the ConnectivityManager to check state of network connectivity
-//            ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-//
-//            // Get details on the currently active default data network
-//            final NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-//            // If there is a network connection, fetch data
-//            if (networkInfo != null && networkInfo.isConnected()) {
-//                // Get a reference to the LoaderManager, in order to interact with loaders.
-//                LoaderManager loaderManager = getLoaderManager();
-//
-//                // Initialize the loader. Pass in the int ID constant defined above and pass in null for
-//                // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
-//                // because this activity implements the LoaderCallbacks interface).
-//                loaderManager.initLoader(BOOK_LOADER_ID, null, MainActivity.this);
-//            } else {
-//                // Otherwise, display error
-//                // First, hide loading indicator so error message will be visible
-//                View loadingIndicator = findViewById(R.id.loading_indicator);
-//                loadingIndicator.setVisibility(View.GONE);
-//
-//                mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
-//                // Update empty state with no connection error message
-//                mEmptyStateTextView.setText("no esta internet");
-//            }
-//        }
-//
-//    public void checkOnSearch() {
-//
-//        // Get a reference to the ConnectivityManager to check state of network connectivity
-//        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-//
-//        // Get details on the currently active default data network
-//        final NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-//        // If there is a network connection, fetch data
-//        if (networkInfo != null && networkInfo.isConnected()) {
-//            // Get a reference to the LoaderManager, in order to interact with loaders.
-//            LoaderManager loaderManager = getLoaderManager();
-//
-//            // Initialize the loader. Pass in the int ID constant defined above and pass in null for
-//            // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
-//            // because this activity implements the LoaderCallbacks interface).
-//
-//            loaderManager.restartLoader(BOOK_LOADER_ID, null, MainActivity.this);
-//        } else {
-//            // Otherwise, display error
-//            // First, hide loading indicator so error message will be visible
-//            View loadingIndicator = findViewById(R.id.loading_indicator);
-//            loadingIndicator.setVisibility(View.GONE);
-//
-//            mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
-//            // Update empty state with no connection error message
-//            mEmptyStateTextView.setText("no esta internet");
-//        }
-//
-//    }
     @Override
     public Loader<List<Book>> onCreateLoader(int i, Bundle args) {
 
@@ -199,13 +141,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         View loadingIndicator = findViewById(R.id.loading_indicator);
         loadingIndicator.setVisibility(View.GONE);
 
-        // Set empty state text to display "No earthquakes found."
+        // Set empty state text to display "No books were found."
         mEmptyStateTextView.setText(R.string.no_books);
 
         // Clear the adapter of previous earthquake data
         mAdapter.clear();
 
-        // If there is a valid list of {@link Book}s, then add them to the adapter's
+        // If there is a valid list of {@link Books}, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (books != null && !books.isEmpty()) {
             mAdapter.addAll(books);
@@ -218,5 +160,4 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mAdapter.clear();
 
     }
-
 }

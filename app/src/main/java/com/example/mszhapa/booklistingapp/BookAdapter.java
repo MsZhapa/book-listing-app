@@ -15,7 +15,6 @@ import java.util.List;
 
 public class BookAdapter extends ArrayAdapter<Book> {
 
-
     public BookAdapter(Context context, List<Book> books) {
 
         super(context, 0, books);
@@ -36,7 +35,6 @@ public class BookAdapter extends ArrayAdapter<Book> {
         // Display the title of the current book in that TextView
         String bookTitle = currentBook.getTitle();
         titleView.setText(bookTitle);
-
 
         // Find the TextView with view ID author
         TextView authorView = (TextView) listItemView.findViewById(R.id.author);

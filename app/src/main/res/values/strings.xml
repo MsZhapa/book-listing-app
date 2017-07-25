@@ -2,4 +2,6 @@
     <string name="app_name">BookListingApp</string>
     <string name="no_internet_connection">There is no Internet connection!</string>
     <string name="no_books">No books were found</string>
+    <string name="welcome">Welcome to your library! Here you can search for the book you want, from millions available today on Google Books!</string>
+    <string name="button">Enter the library</string>
 </resources>

@@ -31,9 +31,9 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:fontFamily="sans-serif-medium"
-            android:maxLines="1"
-            android:textColor="#000"
-            android:textSize="16sp"
+            android:maxLines="2"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp"
             tools:text="Devil wears Prada" />
 
         <TextView
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textColor="#000"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             tools:text="By Someone" />
 

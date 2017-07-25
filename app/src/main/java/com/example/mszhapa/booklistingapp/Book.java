@@ -10,11 +10,12 @@ public class Book {
     private StringBuilder mAuthors;
     private String mUrl;
 
-    public Book(String title, StringBuilder authors, String url){
+    public Book(String title, StringBuilder authors, String url) {
         mTitle = title;
         mAuthors = authors;
         mUrl = url;
     }
+
     public String getTitle() {
         return mTitle;
     }
@@ -23,7 +24,7 @@ public class Book {
         return mAuthors;
     }
 
-    public String getUrl(){
+    public String getUrl() {
         return mUrl;
     }
 }

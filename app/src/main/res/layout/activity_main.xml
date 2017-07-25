@@ -19,7 +19,7 @@
             android:textSize="15sp"
             tools:text="@string/no_internet_connection" />
 
-        <Button
+        <ImageButton
             android:id="@+id/button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -29,6 +29,5 @@
     </LinearLayout>
 
     <include layout="@layout/book_contents" />
-
 
 </LinearLayout>

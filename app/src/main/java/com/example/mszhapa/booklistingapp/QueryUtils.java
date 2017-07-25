@@ -51,7 +51,7 @@ public class QueryUtils {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
 
-        // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
+        // Extract relevant fields from the JSON response and create a list of {@link Book}s
         List<Book> books = extractFeatureFromJson(jsonResponse);
 
         // Return the list of {@link Books
@@ -138,6 +138,16 @@ public class QueryUtils {
             // Extract the JSONArray associated with the key called "items",
             // which represents a list of features (or books).
             JSONArray itemsArray = baseJsonResponse.getJSONArray("items");
+            StringBuilder items = new StringBuilder();
+            if (baseJsonResponse.has("items")) {
+                itemsArray = baseJsonResponse.getJSONArray("items");
+                for (int n = 0; n < itemsArray.length(); n++) {
+                    items.append(System.getProperty("line.separator"));
+                    items.append(itemsArray.getString(n));
+                }
+            } else {
+                items.append("No Items");
+            }
 
             // For each book in the bookArray, create an {@link Book} object
             for (int i = 0; i < itemsArray.length(); i++) {
@@ -156,7 +166,7 @@ public class QueryUtils {
                 StringBuilder authors = new StringBuilder();
                 if (volumeInfo.has("authors")) {
                     authorsArray = volumeInfo.getJSONArray("authors");
-                    for (int n=0; n < authorsArray.length(); n++) {
+                    for (int n = 0; n < authorsArray.length(); n++) {
                         authors.append(System.getProperty("line.separator"));
                         authors.append(authorsArray.getString(n));
                     }
@@ -164,13 +174,13 @@ public class QueryUtils {
                     authors.append("No Author");
                 }
                 String url = null;
-                if (volumeInfo.has("infoLink")){
+                if (volumeInfo.has("infoLink")) {
                     url = volumeInfo.getString("infoLink");
                 }
                 // Create a new {@link Book} object with the title, author and url from the JSON response.
-                Book book = new Book(title, authors,url);
+                Book book = new Book(title, authors, url);
 
-                // Add the new {@link book} to the list of books.
+                // Add the new {@link Book} to the list of books.
                 books.add(book);
             }
         } catch (JSONException e) {
